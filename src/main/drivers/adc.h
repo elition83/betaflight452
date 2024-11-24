@@ -113,6 +113,4 @@ uint16_t adcInternalCompensateVref(uint16_t vrefAdcValue);
 int16_t adcInternalComputeTemperature(uint16_t tempAdcValue, uint16_t vrefValue);
 #endif
 
-#if !defined(SIMULATOR_BUILD)
 ADCDevice adcDeviceByInstance(ADC_TypeDef *instance);
-#endif

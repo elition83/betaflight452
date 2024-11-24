@@ -79,7 +79,7 @@ void config_streamer_start(config_streamer_t *c, uintptr_t base, int size)
     // NOP
 #elif defined(AT32F4)
     flash_flag_clear(FLASH_ODF_FLAG | FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
-#elif defined(UNIT_TEST) || defined(SIMULATOR_BUILD)
+#elif defined(UNIT_TEST)
     // NOP
 #else
 # error "Unsupported CPU"

@@ -31,16 +31,10 @@ void run(void);
 
 int main(int argc, char * argv[])
 {
-#ifdef SIMULATOR_BUILD
-    targetParseArgs(argc, argv);
-#else
     UNUSED(argc);
     UNUSED(argv);
-#endif
     init();
-
     run();
-
     return 0;
 }
 
@@ -48,8 +42,5 @@ void FAST_CODE run(void)
 {
     while (true) {
         scheduler();
-#ifdef SIMULATOR_BUILD
-        delayMicroseconds_real(50); // max rate 20kHz
-#endif
     }
 }

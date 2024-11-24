@@ -414,9 +414,8 @@ void init(void)
 #endif
     LED2_ON;
 
-#if !defined(SIMULATOR_BUILD)
     EXTIInit();
-#endif
+
 
 #if defined(USE_BUTTONS)
 
@@ -512,7 +511,7 @@ void init(void)
     busSwitchInit();
 #endif
 
-#if defined(USE_UART) && !defined(SIMULATOR_BUILD)
+#if defined(USE_UART)
     uartPinConfigure(serialPinConfig());
 #endif
 
@@ -564,7 +563,7 @@ void init(void)
     beeperInit(beeperDevConfig());
 #endif
 /* temp until PGs are implemented. */
-#if defined(USE_INVERTER) && !defined(SIMULATOR_BUILD)
+#if defined(USE_INVERTER)
     initInverters(serialPinConfig());
 #endif
 

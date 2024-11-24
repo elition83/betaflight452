@@ -434,16 +434,6 @@
 #endif
 #endif
 
-#ifndef SIMULATOR_BUILD
-#ifndef USE_ACC
-#define USE_ACC
-#endif
-
-#ifndef USE_GYRO
-#define USE_GYRO
-#endif
-#endif
-
 // CX10 is a special case of SPI RX which requires XN297
 #if defined(USE_RX_CX10)
 #define USE_RX_XN297
@@ -501,7 +491,7 @@
 #define USE_WS2811_SINGLE_COLOUR
 #endif
 
-#if defined(SIMULATOR_BUILD) || defined(UNIT_TEST)
+#if defined(UNIT_TEST)
 // This feature uses 'arm_math.h', which does not exist for x86.
 #undef USE_DYN_NOTCH_FILTER
 #endif

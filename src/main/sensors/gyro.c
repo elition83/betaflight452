@@ -308,34 +308,6 @@ static FAST_CODE_NOINLINE void checkForOverflow(timeUs_t currentTimeUs)
     // Overflow and sign reversal seems to result in a gyro value of +1996 or -1996.
     if (overflowDetected) {
         handleOverflow(currentTimeUs);
-    } else {
-#ifndef SIMULATOR_BUILD
-        // check for overflow in the axes set in overflowAxisMask
-        gyroOverflow_e overflowCheck = GYRO_OVERFLOW_NONE;
-
-        // This will need to be revised if we ever allow different sensor types to be
-        // used simultaneously. In that case the scale might be different between sensors.
-        // It's complicated by the fact that we're using filtered gyro data here which is
-        // after both sensors are scaled and averaged.
-        const float gyroOverflowTriggerRate = GYRO_OVERFLOW_TRIGGER_THRESHOLD * gyro.scale;
-
-        if (fabsf(gyro.gyroADCf[X]) > gyroOverflowTriggerRate) {
-            overflowCheck |= GYRO_OVERFLOW_X;
-        }
-        if (fabsf(gyro.gyroADCf[Y]) > gyroOverflowTriggerRate) {
-            overflowCheck |= GYRO_OVERFLOW_Y;
-        }
-        if (fabsf(gyro.gyroADCf[Z]) > gyroOverflowTriggerRate) {
-            overflowCheck |= GYRO_OVERFLOW_Z;
-        }
-        if (overflowCheck & gyro.overflowAxisMask) {
-            overflowDetected = true;
-            overflowTimeUs = currentTimeUs;
-#ifdef USE_YAW_SPIN_RECOVERY
-            yawSpinDetected = false;
-#endif // USE_YAW_SPIN_RECOVERY
-        }
-#endif // SIMULATOR_BUILD
     }
 }
 #endif // USE_GYRO_OVERFLOW_CHECK
@@ -367,14 +339,6 @@ static FAST_CODE_NOINLINE void checkForYawSpin(timeUs_t currentTimeUs)
 
     if (yawSpinDetected) {
         handleYawSpin(currentTimeUs);
-    } else {
-#ifndef SIMULATOR_BUILD
-        // check for spin on yaw axis only
-         if (abs((int)gyro.gyroADCf[Z]) > yawSpinRecoveryThreshold) {
-            yawSpinDetected = true;
-            yawSpinTimeUs = currentTimeUs;
-        }
-#endif // SIMULATOR_BUILD
     }
 }
 #endif // USE_YAW_SPIN_RECOVERY

@@ -39,9 +39,6 @@
 #include "drivers/serial_softserial.h"
 #endif
 
-#if defined(SIMULATOR_BUILD)
-#include "drivers/serial_tcp.h"
-#endif
 
 #include "drivers/light_led.h"
 
@@ -485,13 +482,10 @@ serialPort_t *openSerialPort(
 #ifdef USE_LPUART1
         case SERIAL_PORT_LPUART1:
 #endif
-#if defined(SIMULATOR_BUILD)
-            // emulate serial ports over TCP
-            serialPort = serTcpOpen(SERIAL_PORT_IDENTIFIER_TO_UARTDEV(identifier), rxCallback, rxCallbackData, baudRate, mode, options);
-#else
-            serialPort = uartOpen(SERIAL_PORT_IDENTIFIER_TO_UARTDEV(identifier), rxCallback, rxCallbackData, baudRate, mode, options);
-#endif
-            break;
+
+serialPort = uartOpen(SERIAL_PORT_IDENTIFIER_TO_UARTDEV(identifier), rxCallback, rxCallbackData, baudRate, mode, options);
+break;
+
 #endif
 
 #ifdef USE_SOFTSERIAL
@@ -551,7 +545,6 @@ void serialInit(bool softserialEnabled, serialPortIdentifier_e serialPortToDisab
                 serialPortCount--;
             }
         }
-#if !defined(SIMULATOR_BUILD)
         else if (serialPortUsageList[index].identifier <= SERIAL_PORT_USART10
 #ifdef USE_LPUART1
             || serialPortUsageList[index].identifier == SERIAL_PORT_LPUART1
@@ -563,7 +556,7 @@ void serialInit(bool softserialEnabled, serialPortIdentifier_e serialPortToDisab
                 serialPortCount--;
             }
         }
-#endif
+
 #ifdef USE_SOFTSERIAL
         else if (((serialPortUsageList[index].identifier == SERIAL_PORT_SOFTSERIAL1) &&
                    (!softserialEnabled || !(softSerialPinConfig()->ioTagRx[SOFTSERIAL1] || softSerialPinConfig()->ioTagTx[SOFTSERIAL1]))) ||

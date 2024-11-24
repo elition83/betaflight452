@@ -3598,7 +3598,7 @@ static void cliGpsPassthrough(const char *cmdName, char *cmdline)
 }
 #endif
 
-#if defined(USE_GYRO_REGISTER_DUMP) && !defined(SIMULATOR_BUILD)
+#if defined(USE_GYRO_REGISTER_DUMP)
 static void cliPrintGyroRegisters(uint8_t whichSensor)
 {
     cliPrintLinef("# WHO_AM_I    0x%X", gyroReadRegister(whichSensor, MPU_RA_WHO_AM_I));
@@ -6521,7 +6521,7 @@ const clicmd_t cmdTable[] = {
 #ifdef USE_GPS
     CLI_COMMAND_DEF("gpspassthrough", "passthrough gps to serial", NULL, cliGpsPassthrough),
 #endif
-#if defined(USE_GYRO_REGISTER_DUMP) && !defined(SIMULATOR_BUILD)
+#if defined(USE_GYRO_REGISTER_DUMP)
     CLI_COMMAND_DEF("gyroregisters", "dump gyro config registers contents", NULL, cliDumpGyroRegisters),
 #endif
     CLI_COMMAND_DEF("help", "display command help", "[search string]", cliHelp),
