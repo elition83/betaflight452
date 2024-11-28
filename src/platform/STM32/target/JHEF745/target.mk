@@ -1,0 +1,30 @@
+TARGET_MCU        := STM32F745xx
+TARGET_MCU_FAMILY := STM32F7
+
+# Микроконтроллер
+MCU = STM32F745
+
+# Использование целевого конфигурационного файла
+USE_TARGET_CONFIG = yes
+
+# Настройки
+FEATURES += RX_SERIAL
+FEATURES += TELEMETRY
+FEATURES += OSD
+FEATURES += CURRENT_METER
+FEATURES += VOLTAGE_METER
+FEATURES += BLACKBOX
+FEATURES += LED_STRIP
+FEATURES += CAMERA_CONTROL
+FEATURES += BARO
+FEATURES += MAG
+
+# Тип транспорта для Blackbox
+BLACKBOX_FLASH = yes
+
+# Используемые драйверы и устройства
+DRIVERS += ACC
+DRIVERS += GYRO
+DRIVERS += BARO
+DRIVERS += FLASH
+DRIVERS += MAX7456
