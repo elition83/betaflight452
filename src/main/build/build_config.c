@@ -31,9 +31,7 @@
 
 mcuTypeId_e getMcuTypeId(void)
 {
-#if defined(SIMULATOR_BUILD)
-    return MCU_TYPE_SIMULATOR;
-#elif defined(STM32F40_41xxx)
+#if defined(STM32F40_41xxx)
     return MCU_TYPE_F40X;
 #elif defined(STM32F411xE)
     return MCU_TYPE_F411;

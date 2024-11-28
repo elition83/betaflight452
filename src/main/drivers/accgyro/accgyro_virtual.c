@@ -23,7 +23,7 @@
 
 #include "platform.h"
 
-#if defined(SIMULATOR_BUILD) && defined(SIMULATOR_MULTITHREAD)
+#if defined(SIMULATOR_MULTITHREAD)
 #include <stdio.h>
 #include <pthread.h>
 #endif
@@ -44,7 +44,7 @@ gyroDev_t *virtualGyroDev;
 static void virtualGyroInit(gyroDev_t *gyro)
 {
     virtualGyroDev = gyro;
-#if defined(SIMULATOR_BUILD) && defined(SIMULATOR_MULTITHREAD)
+#if defined(SIMULATOR_MULTITHREAD)
     if (pthread_mutex_init(&gyro->lock, NULL) != 0) {
         printf("Create gyro lock error!\n");
     }
@@ -93,11 +93,7 @@ bool virtualGyroDetect(gyroDev_t *gyro)
     gyro->initFn = virtualGyroInit;
     gyro->readFn = virtualGyroRead;
     gyro->temperatureFn = virtualGyroReadTemperature;
-#if defined(SIMULATOR_BUILD)
-    gyro->scale = GYRO_SCALE_2000DPS;
-#else
     gyro->scale = 1.0f;
-#endif
     return true;
 }
 #endif // USE_VIRTUAL_GYRO
@@ -110,7 +106,7 @@ accDev_t *virtualAccDev;
 static void virtualAccInit(accDev_t *acc)
 {
     virtualAccDev = acc;
-#if defined(SIMULATOR_BUILD) && defined(SIMULATOR_MULTITHREAD)
+#if defined(SIMULATOR_MULTITHREAD)
     if (pthread_mutex_init(&acc->lock, NULL) != 0) {
         printf("Create acc lock error!\n");
     }

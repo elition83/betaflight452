@@ -214,9 +214,6 @@ void taskSystemLoad(timeUs_t currentTimeUs)
         schedulerIgnoreTaskExecTime();
     }
 
-#if defined(SIMULATOR_BUILD)
-    averageSystemLoadPercent = 0;
-#endif
 }
 
 uint32_t getCpuPercentageLate(void)

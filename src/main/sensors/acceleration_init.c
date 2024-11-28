@@ -118,11 +118,7 @@ static void setConfigCalibrationCompleted(void)
 
 bool accHasBeenCalibrated(void)
 {
-#ifdef SIMULATOR_BUILD
-    return true;
-#else
     return accelerometerConfig()->accZero.values.calibrationCompleted;
-#endif
 }
 
 void accResetRollAndPitchTrims(void)

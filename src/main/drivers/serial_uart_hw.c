@@ -28,7 +28,7 @@
 
 #include "platform.h"
 
-#if defined(USE_UART) && !defined(SIMULATOR_BUILD)
+#if defined(USE_UART)
 
 #include "build/build_config.h"
 

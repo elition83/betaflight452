@@ -82,7 +82,7 @@ void config_streamer_start(config_streamer_t *c, uintptr_t base, int size)
     flash_flag_clear(FLASH_ODF_FLAG | FLASH_PRGMERR_FLAG | FLASH_EPPERR_FLAG);
 #elif defined(APM32F4)
     __DAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_OPERR | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR);
-#elif defined(UNIT_TEST) || defined(SIMULATOR_BUILD)
+#elif defined(UNIT_TEST)
     // NOP
 #else
 # error "Unsupported CPU"

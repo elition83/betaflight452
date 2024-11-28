@@ -155,7 +155,7 @@ void compassPreInit(void)
 #endif
 }
 
-#if !defined(SIMULATOR_BUILD)
+
 bool compassDetect(magDev_t *magDev, uint8_t *alignment)
 {
     *alignment = ALIGN_DEFAULT;  // may be overridden if target specifies MAG_*_ALIGN
@@ -356,15 +356,7 @@ bool compassDetect(magDev_t *magDev, uint8_t *alignment)
     sensorsSet(SENSOR_MAG);
     return true;
 }
-#else
-bool compassDetect(magDev_t *dev, sensor_align_e *alignment)
-{
-    UNUSED(dev);
-    UNUSED(alignment);
 
-    return false;
-}
-#endif // !SIMULATOR_BUILD
 
 bool compassInit(void)
 {

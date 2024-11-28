@@ -272,7 +272,6 @@ COMMON_SRC = \
             io/vtx_msp.c \
             cms/cms_menu_vtx_msp.c
 
-ifneq ($(SIMULATOR_BUILD),yes)
 
 COMMON_SRC += \
             drivers/accgyro/accgyro_mpu3050.c \
@@ -376,7 +375,7 @@ INCLUDE_DIRS    := $(INCLUDE_DIRS) \
                    $(FATFS_DIR)
 VPATH           := $(VPATH):$(FATFS_DIR)
 
-endif
+
 
 COMMON_DEVICE_SRC = \
             $(CMSIS_SRC) \
@@ -392,9 +391,6 @@ ifeq ($(RAM_BASED),yes)
 TARGET_FLAGS := -DUSE_EXST -DCONFIG_IN_RAM -DRAMBASED $(TARGET_FLAGS)
 endif
 
-ifeq ($(SIMULATOR_BUILD),yes)
-TARGET_FLAGS := -DSIMULATOR_BUILD $(TARGET_FLAGS)
-endif
 
 SPEED_OPTIMISED_SRC += \
             common/encoding.c \

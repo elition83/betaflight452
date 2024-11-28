@@ -39,9 +39,7 @@
 #include "drivers/serial_softserial.h"
 #endif
 
-#if defined(SIMULATOR_BUILD)
-#include "drivers/serial_tcp.h"
-#endif
+
 
 #include "drivers/light_led.h"
 
@@ -506,12 +504,7 @@ serialPort_t *openSerialPort(
 #if defined(USE_UART)
     case SERIALTYPE_UART:
     case SERIALTYPE_LPUART:
-#if defined(SIMULATOR_BUILD)
-        // emulate serial ports over TCP
-        serialPort = serTcpOpen(identifier, rxCallback, rxCallbackData, baudRate, mode, options);
-#else
-        serialPort = uartOpen(identifier, rxCallback, rxCallbackData, baudRate, mode, options);
-#endif
+    serialPort = uartOpen(identifier, rxCallback, rxCallbackData, baudRate, mode, options);
 #endif
         break;
 #ifdef USE_SOFTSERIAL
@@ -576,14 +569,12 @@ void serialInit(bool softserialEnabled, serialPortIdentifier_e serialPortToDisab
                 continue;  // this index is deleted
         }
         {
-#if !defined(SIMULATOR_BUILD)  // no serialPinConfig on SITL
             const int resourceIndex = serialResourceIndex(serialPortUsageList[index].identifier);
             if (resourceIndex >= 0   // resource exists
                 && !(serialPinConfig()->ioTagTx[resourceIndex] || serialPinConfig()->ioTagRx[resourceIndex])) {
                 serialPortUsageList[index].identifier = SERIAL_PORT_NONE;
                 continue;
             }
-#endif
         }
         if (serialType(serialPortUsageList[index].identifier) == SERIALTYPE_SOFTSERIAL) {
             if (true

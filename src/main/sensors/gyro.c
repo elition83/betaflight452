@@ -308,7 +308,6 @@ static FAST_CODE_NOINLINE void checkForOverflow(timeUs_t currentTimeUs)
     if (overflowDetected) {
         handleOverflow(currentTimeUs);
     } else {
-#ifndef SIMULATOR_BUILD
         // check for overflow in the axes set in overflowAxisMask
         gyroOverflow_e overflowCheck = GYRO_OVERFLOW_NONE;
 
@@ -334,7 +333,7 @@ static FAST_CODE_NOINLINE void checkForOverflow(timeUs_t currentTimeUs)
             yawSpinDetected = false;
 #endif // USE_YAW_SPIN_RECOVERY
         }
-#endif // SIMULATOR_BUILD
+
     }
 }
 #endif // USE_GYRO_OVERFLOW_CHECK
@@ -363,17 +362,14 @@ static FAST_CODE_NOINLINE void checkForYawSpin(timeUs_t currentTimeUs)
         return;
     }
 #endif // USE_GYRO_OVERFLOW_CHECK
-
     if (yawSpinDetected) {
         handleYawSpin(currentTimeUs);
     } else {
-#ifndef SIMULATOR_BUILD
         // check for spin on yaw axis only
          if (abs((int)gyro.gyroADCf[Z]) > yawSpinRecoveryThreshold) {
             yawSpinDetected = true;
             yawSpinTimeUs = currentTimeUs;
         }
-#endif // SIMULATOR_BUILD
     }
 }
 #endif // USE_YAW_SPIN_RECOVERY
